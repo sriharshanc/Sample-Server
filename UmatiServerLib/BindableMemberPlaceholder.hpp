@@ -209,7 +209,13 @@ public:
       **/
 
       auto t = std::time(nullptr);
-      auto tm = *std::gmtime(&t);
+      std::tm tm;
+      std::memset(&tm, 0, sizeof(tm));
+      #ifdef __STDC_LIB_EXT1__
+      gmtime_s(&tm, &t);
+      #else
+      gmtime_r(&t, &tm);
+      #endif
 
       std::ostringstream oss;
       oss << std::put_time(&tm, "%Y-%m-%dT%H:%M:%SZ");

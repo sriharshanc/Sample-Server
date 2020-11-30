@@ -132,6 +132,7 @@ set_target_properties(SampleServerLib PROPERTIES LINKER_LANGUAGE CXX)
 target_link_libraries(SampleServerLib PUBLIC open62541::open62541)
 target_link_libraries(SampleServerLib PUBLIC Open62541Cpp::Open62541Cpp)
 target_link_libraries(SampleServerLib PUBLIC reflCpp::reflCpp)
+target_compile_definitions(SampleServerLib PUBLIC __STDC_WANT_LIB_EXT1__)
 
 add_executable(
     ${PROJECT_NAME}

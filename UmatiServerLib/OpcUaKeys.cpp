@@ -123,7 +123,13 @@ void OpcUaKeys::generateCertificate()
 
   {
     std::time_t t = std::time(nullptr);
-    std::tm tm = *std::localtime(&t);
+    std::tm tm;
+    std::memset(&tm, 0, sizeof(tm));
+    #ifdef __STDC_LIB_EXT1__
+    localtime_s(&tm, &t);
+    #else
+    localtime_r(&t, &tm);
+    #endif
     std::stringstream ss;
     ss << std::put_time(&tm, "%Y%m%d%H%M%S");
     not_before = ss.str();
@@ -132,7 +138,13 @@ void OpcUaKeys::generateCertificate()
   {
     std::time_t t = std::time(nullptr);
     t += 5l * 365l * 24l * 60l * 60l; // Add 5 years
-    std::tm tm = *std::localtime(&t);
+    std::tm tm;
+    std::memset(&tm, 0, sizeof(tm));
+    #ifdef __STDC_LIB_EXT1__
+    localtime_s(&tm, &t);
+    #else
+    localtime_r(&t, &tm);
+    #endif
     std::stringstream ss;
     ss << std::put_time(&tm, "%Y%m%d%H%M%S");
     not_after = ss.str();
